@@ -40,5 +40,5 @@
 **/.next/
 **/.angular/
 **/.jest/
-**/tests/__snapshot__/
-**/tests/coverage/
+**/__snapshots__/
+**/coverage/

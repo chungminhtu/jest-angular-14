@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FlightListService Integration tests Should return all the routes from API 1`] = `
+Object {
+  "flights": Array [
+    Object {
+      "currency": "€",
+      "dateFrom": "2015-01-23T16:36:05.327Z",
+      "dateTo": "2015-01-27T13:15:55.259Z",
+      "price": 51.27638573665172,
+    },
+    Object {
+      "currency": "€",
+      "dateFrom": "2015-01-06T03:04:52.727Z",
+      "dateTo": "2015-01-23T13:53:58.497Z",
+      "price": 248.29093798669055,
+    },
+    Object {
+      "currency": "€",
+      "dateFrom": "2014-12-16T10:07:11.016Z",
+      "dateTo": "2014-12-25T02:22:18.858Z",
+      "price": 112.96679598651826,
+    },
+    Object {
+      "currency": "€",
+      "dateFrom": "2014-12-29T19:23:31.057Z",
+      "dateTo": "2015-01-11T00:10:41.880Z",
+      "price": 51.21940969163552,
+    },
+    Object {
+      "currency": "€",
+      "dateFrom": "2015-01-14T11:15:15.000Z",
+      "dateTo": "2015-01-17T13:34:56.038Z",
+      "price": 188.452620069962,
+    },
+  ],
+}
+`;

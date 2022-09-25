@@ -1,12 +1,10 @@
 # Integrating jest with angular 14 +
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/node-wvshji)
-
 ## Steps
 
 1. uninstall jasmine & karma using `npm uninstall -D @types/jasmine jasmine jasmine-core jasmine-spec-reporter karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter ts-node`
 2. install jest using `npm i -D @types/jest jest jest-preset-angular @angular-builders/jest`
-3. create file `setupJest.ts` in root and add below content
+3. create file `tests/setupJest.ts` in root and add below content
 
 ```typescript
 import { getTestBed } from '@angular/core/testing';
@@ -47,6 +45,7 @@ Object.defineProperty(document.body.style, 'transform', {
   }
 });
 
+HTMLCanvasElement.prototype.getContext = <typeof HTMLCanvasElement.prototype.getContext>jest.fn();
 ```
 
 4. create file `jest.config.js` in root and add below content
@@ -56,21 +55,50 @@ module.exports = {
   preset: 'jest-preset-angular',
   roots: ['<rootDir>/src'],
   testMatch: ['**/+(*.)+(spec).+(ts)'],
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/dist/'
+  ],
   collectCoverage: true,
   coverageReporters: ['html', 'lcov', 'json', 'text'],
-  coverageDirectory: '<rootDir>/coverage',
+  coverageDirectory: 'tests/coverage',
   moduleFileExtensions: ['ts', 'html', 'js', 'json'],
+  snapshotResolver: './tests/snapshotResolver.js',
+  coverageThreshold: {
+    global: {
+      lines: 90
+    }
+  }
 };
 ```
+5. create `tests/snapshotResolver.js` in root with below content
+```javascript
+const path = require('path')
+const rootDir = path.resolve(__dirname, '..')
+module.exports = {
+  testPathForConsistencyCheck: 'some/__tests__/example.test.js',
 
-5. replace `test` part of `angular.json` with below content
+  /** resolves from test to snapshot path */
+  resolveSnapshotPath: (testPath, snapshotExtension) => {
+    return testPath.replace('src/', 'tests/__snapshots__/') + snapshotExtension
+  },
+
+  /** resolves from snapshot to test path */
+  resolveTestPath: (snapshotFilePath, snapshotExtension) => {
+    return snapshotFilePath
+      .replace('tests/__snapshots__/', 'src/')
+      .slice(0, -snapshotExtension.length)
+  },
+}
+```
+6. replace `test` part of `angular.json` with below content
 
 ```json
 ...
 "test": {
   "builder": "@angular-builders/jest:run",
   "options": {
-    "main": ["setupJest.ts"],
+    "main": ["tests/setupJest.ts"],
     "tsConfig": "src/tsconfig.spec.json",
     "no-cache": true
   }
@@ -78,6 +106,6 @@ module.exports = {
 ...
 ```
 
-6. add ` "esModuleInterop": true` to `compilerOptions` in `tsconfig.json`
-7. open `tsconfig.spec.json` and replace `jasmine` with `jest` in `types` field
-8. that's it jest is now comlpetely integrated with latest angular
+7. add ` "esModuleInterop": true` to `compilerOptions` in `tsconfig.json`
+8. open `tsconfig.spec.json` and replace `jasmine` with `jest` in `types` field
+9. that's it jest is now comlpetely integrated with latest angular

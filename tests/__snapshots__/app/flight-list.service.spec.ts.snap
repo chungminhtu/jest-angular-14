@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FlightListService Should return a single fligth from DUB to MAD 1`] = `
+Object {
+  "arrivalDatetime": "2018-06-15T20:55:00",
+  "departure": "DUB",
+  "departureDatetime": "2018-06-18T17:15:00",
+  "destination": "MAD",
+  "flightNumber": "FR155",
+}
+`;
+
+exports[`FlightListService Should return all the routes from API 1`] = `undefined`;
