@@ -1,0 +1,17 @@
+.airport {
+  padding-right: 18px;
+}
+
+.destination {
+  padding-left: 18px;
+}
+
+.fare + .fare {
+  padding-left: 36px;
+}
+
+.fare + .fare:before {
+  content: '→';
+  display: inline-block;
+  padding-right: 36px;
+}
